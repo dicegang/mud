@@ -279,12 +279,6 @@ mud_now(struct mud *mud)
     return MUD_TIME_MASK(mud->base_time
             + (mach_absolute_time() * mud->mtid.numer / mud->mtid.denom)
             / 1000ULL);
-#elif defined CLOCK_MONOTONIC
-    struct timespec tv;
-    clock_gettime(CLOCK_MONOTONIC, &tv);
-    return MUD_TIME_MASK(mud->base_time
-            + (uint64_t)tv.tv_sec * MUD_ONE_SEC
-            + (uint64_t)tv.tv_nsec / MUD_ONE_MSEC);
 #else
     return mud_time();
 #endif
